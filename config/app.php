@@ -177,6 +177,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Whoops
+         */
+        Gvb\Whoops\ServiceProvider::class,
+
     ],
 
     /*

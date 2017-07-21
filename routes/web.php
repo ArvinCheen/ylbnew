@@ -7,6 +7,6 @@
 
 Route::get('/login','Auth\LoginController@index');
 
-Route::get('/','indexController@index');
+Route::get('/','Auth\LoginController@index');
 
 

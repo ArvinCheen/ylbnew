@@ -42,6 +42,13 @@ $app->singleton(
 );
 
 /*
+ * Whoops
+ */
+$app->singleton(
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    Gvb\Whoops\ExceptionHandler::class
+);
+/*
 |--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
