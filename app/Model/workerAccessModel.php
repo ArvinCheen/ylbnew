@@ -29,16 +29,53 @@ class workerAccessModel extends Model
 
         return $query->get();
     }
-    # 取員工權限
-    function get_worker_access_by_worker_sn($worker_sn)
+
+    function getLeftMenuMainClass($workerSn)
     {
-        $condition = array(
-            'cs_worker_access.worker_sn' => $worker_sn,
-        );
-        return $this->leftJoin('cs_access_list', 'cs_access_list.sn = cs_worker_access.access_sn')
-            ->where($condition)
-            ->order_by("`father_sn` asc , `order` asc")
+        $mainClass = $this->leftJoin('cs_access_list', 'cs_access_list.sn', 'cs_worker_access.access_sn')
+            ->where('worker_sn', $workerSn)
+            ->where('show', 1)
+            ->where('father_sn', 0)
+            ->orderBy('order')
             ->get();
+
+        $data = [];
+        foreach ($mainClass as $val) {
+
+            switch ($val->sn) {
+                case "1": $icon = 'icon-home'; break;  //儀表板
+                case "34": $icon = 'icon-screen-desktop'; break;  //前台管理
+                case "2": $icon = 'icon-users'; break;  //會員管理
+                case "4": $icon = 'icon-ghost'; break;  //員工管理
+                case "7": $icon = 'icon-lock'; break;  //權限管理
+                case "28": $icon = 'icon-eye'; break;  //審核管理
+                case "31": $icon = 'icon-shuffle'; break;  //資料轉換
+            }
+            $data[$val->sn]['icon'] = $icon;
+            $data[$val->sn]['name'] = $val->name;
+            $data[$val->sn]['url'] = $val->url;
+        }
+
+        return $data;
+    }
+
+    function getLeftMenuSubclass($workerSn)
+    {
+        $subClass = $this->leftJoin('cs_access_list', 'cs_access_list.sn', 'cs_worker_access.access_sn')
+            ->where('worker_sn', $workerSn)
+            ->where('show', 1)
+            ->where('father_sn', '<>', 0)
+            ->orderBy('father_sn')
+            ->orderBy('order')
+            ->get();
+
+        $data = [];
+        foreach ($subClass as $val) {
+            $data[$val->father_sn][$val->sn]['name'] = $val->name;
+            $data[$val->father_sn][$val->sn]['url'] = $val->url;
+        }
+
+        return $data;
     }
 
     # worker_access

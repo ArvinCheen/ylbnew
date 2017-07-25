@@ -9,21 +9,27 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+//    protected $table = 'users';
+//
+//    protected $primaryKey = 'id';
+
+    protected $table = 'cs_worker_info_s';
+
+    protected $primaryKey = 'sn';
+
+    public $timestamps = false;
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'employee_sn', 'name', 'gender', 'e_name', 'nickname', 'roc_id', 'birthday', 'address', 'edu', 'school',
+        'department', 'private_mobile', 'public_mobile', 'location', 'job', 'blood_type', 'emergency_name',
+        'emergency_contact_mobile', 'emergency_contact_relation', 'account', 'password', 'work_status',
+        'create_time', 'working_type', 'verify_sn', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 }
+
+
+

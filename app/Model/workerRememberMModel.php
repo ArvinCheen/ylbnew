@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class workerRememberMModel extends Model
 {
-    protected $table = 'cs_worker_remember_m';
+    /**
+     *
+     * 以Laravel的架構，這張Table應該是用不到了
+     *
+     */
+
+
+    protected $table = 'cs_worker_remember_me';
 
     protected $primaryKey = 'sn';
 

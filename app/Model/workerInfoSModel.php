@@ -20,18 +20,24 @@ class workerInfoSModel extends Model
         return $this->select('account')
             ->from('cs_worker_info_s')
             ->where('account' , $account)
-            ->get();
+            ->count();
     }
 
     # 登入檢查 條件:帳、密、在職
-    function get_worker_sn_by_check_login($account,$password)
+    function get_worker_sn_by_check_login($account, $password)
     {
-        return $this->select('employee_sn as worker_sn')
+        $data = $this->select('employee_sn')
             ->from('cs_worker_info_s')
-            ->where('account',$account)
-            ->where('password',$password)
+            ->where('account', $account)
+            ->where('password', $password)
             ->where('work_status','serving')
             ->get();
+
+        if(count($data)) {
+            return $data[0]->employee_sn;
+        } else {
+            return false;
+        }
     }
     # 會員分配 取所有員工
     function get_worker_list()

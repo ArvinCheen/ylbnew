@@ -34,43 +34,38 @@
 <!-- BEGIN LOGO -->
 <div class="logo">
     <a href="/admins">
-        <img src="{{ URL::asset('img/admins_login_logo.png') }}" alt="" /> </a>
+        <img src="{{ URL::asset('img/admins_login_logo.png') }}"/> </a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" action="login" method="post">
+        {{ csrf_field() }}
         <h3 class="form-title font-green">登入</h3>
-        @if(isset($message_success))
+        @if(session('registerFlashSuccess'))
         <div class="alert alert-success display-block">
-            <button class="close" data-close="alert"></button> {{ $message_success }}
+            <button class="close" data-close="alert"></button> {{ session('registerFlashSuccess') }}
         </div>
         @endif
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> 請輸入帳號密碼 </span>
         </div>
-        @if(isset($error_msg))
+        @if(session('loginFlashError'))
         <div class="alert alert-danger">
             <button class="close" data-close="alert"></button>
-            <span> {{ $error_msg }} </span>
+            <span> {{ session('loginFlashError') }} </span>
         </div>
         @endif
         <div class="form-group">
-            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">帳號</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="帳號" name="login_account" value="<?php echo (isset($remember_account)) ? $remember_account : '';?>" /> </div>
+            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="帳號" name="login_account" value="{{ old('login_account') }}" /> </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">密碼</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密碼" name="login_password" value="<?php echo (isset($remember_password)) ? $remember_password : '';?>" /> </div>
+            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密碼" name="login_password"/> </div>
         <div class="form-actions">
-            <input type="submit" class="btn green uppercase" name="login_submit" value="登入">
-            <label class="rememberme check mt-checkbox mt-checkbox-outline">
-                <input type="checkbox" name="remember" value="1" {{ isset($name) ? 'checked' : '' }}/> 記住我
-                <span></span>
-            </label>
-            <!-- <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a> -->
+            <input type="submit" class="btn green uppercase" name="login_submitsss" value="登入">
         </div>
         <div class="create-account">
             <p>
@@ -79,24 +74,13 @@
         </div>
     </form>
     <!-- END LOGIN FORM -->
-    <!-- BEGIN FORGOT PASSWORD FORM -->
-    <form class="forget-form" action="index.html" method="post">
-        <h3 class="font-green">Forget Password ?</h3>
-        <p> Enter your e-mail address below to reset your password. </p>
-        <div class="form-group">
-            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
-        <div class="form-actions">
-            <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-            <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
-        </div>
-    </form>
-    <!-- END FORGOT PASSWORD FORM -->
     <!-- BEGIN REGISTRATION FORM -->
-    <form class="register-form" action="/admins/login" method="post">
+    <form class="register-form" action="register" method="post">
+        {{ csrf_field() }}
         <h3 class="font-green">註冊</h3>
-        @if(isset($message_error))
+        @if(session('registerFlashError'))
         <div class="alert alert-danger display-block">
-            <button class="close" data-close="alert"></button> {{ old('message_error') }}; ?>
+            <button class="close" data-close="alert"></button>{{ session('registerFlashError') }}
         </div>
         @endif
         <p class="hint">請輸入以下個人資訊： </p>
@@ -144,7 +128,7 @@
             <select id="select_gender" name="gender" class="form-control bs-select" title="性別">
                 <option class="verify-select-option" value="" selected>性別</option>
                 @foreach ($gender as $gender_key => $gender_value)
-                <option value="<?php echo $gender_value->describe_e;?>"><?php echo $gender_value->describe_c;?></option>
+                <option value="{{ $gender_value->describe_e }}">{{ $gender_value->describe_c }}</option>
                 @endforeach
             </select>
         </div>
@@ -153,23 +137,23 @@
             <select id="select_working_type" name="working_type" class="form-control bs-select" title="員工上班型態">
                 <option class="verify-select-option" value="" selected>員工上班型態</option>
                 @foreach ($working_type as $working_type_key => $working_type_value)
-                <option value="<?php echo $working_type_value->describe_e;?>"><?php echo $working_type_value->describe_c;?></option>
+                <option value="{{ $working_type_value->describe_e }}">{{ $working_type_value->describe_c }}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">私人手機號碼</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="私人手機號碼" title="私人手機號碼" value="{{ old('private_mobile') }}; ?>" name="private_mobile" />
+            <input class="form-control placeholder-no-fix" type="text" placeholder="私人手機號碼" title="私人手機號碼" value="{{ old('private_mobile') }}" name="private_mobile" />
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">公司手機號碼</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="公司手機號碼" title="公司手機號碼" value="{{ old('public_mobile') }}; ?>" name="public_mobile" />
+            <input class="form-control placeholder-no-fix" type="text" placeholder="公司手機號碼" title="公司手機號碼" value="{{ old('public_mobile') }}" name="public_mobile" />
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">出生年月日</label>
 
             <div data-date-format="yy-mm-dd" class="input-group date date-picker">
-                <input class="form-control placeholder-no-fix" type="text" placeholder="出生年月日" class="form-control form-control-inline date-picker" readonly name="birthday"  title="出生年月日" value="{{ old('birthday') }}; ?>" />
+                <input class="form-control placeholder-no-fix" type="text" placeholder="出生年月日" class="form-control form-control-inline date-picker" readonly name="birthday"  title="出生年月日" value="{{ old('birthday') }}" />
                 <span class="input-group-btn">
 							<button class="btn default" type="button">
 								<i class="fa fa-calendar"></i>
@@ -213,25 +197,25 @@
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">緊急聯絡人</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="緊急聯絡人" title="緊急聯絡人" value="{{ old('emergency_name') }}; ?>" name="emergency_name" />
+            <input class="form-control placeholder-no-fix" type="text" placeholder="緊急聯絡人" title="緊急聯絡人" value="{{ old('emergency_name') }}" name="emergency_name" />
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">緊急聯絡人手機</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="緊急聯絡人手機" title="緊急聯絡人手機" value="{{ old('emergency_contact_mobile') }}; ?>" name="emergency_contact_mobile" />
+            <input class="form-control placeholder-no-fix" type="text" placeholder="緊急聯絡人手機" title="緊急聯絡人手機" value="{{ old('emergency_contact_mobile') }}" name="emergency_contact_mobile" />
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">緊急聯絡人關係</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="緊急聯絡人關係" title="緊急聯絡人關係" value="{{ old('emergency_contact_relation') }}; ?>" name="emergency_contact_relation" />
+            <input class="form-control placeholder-no-fix" type="text" placeholder="緊急聯絡人關係" title="緊急聯絡人關係" value="{{ old('emergency_contact_relation') }}" name="emergency_contact_relation" />
         </div>
 
 
         <p class="hint"> 請輸入以下帳號資訊： </p>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">帳號</label>
-            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="帳號" name="account" title="帳號" value="{{ $account or '' }}" /> </div>
+            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="帳號" name="account" title="帳號" value="{{ old('account') }}" /> </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">密碼</label>
-            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="密碼" name="password" title="密碼" value="{{ $password or '' }}" /> </div>
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="密碼" name="password" title="密碼"/> </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">再輸入一次密碼</label>
             <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="再輸入一次密碼" name="rpassword"  title="再輸入一次密碼" /> </div>
@@ -275,6 +259,24 @@
 <script src="{{ URL::asset('pages/scripts/components-date-time-pickers.js') }}" type="text/javascript" defer="defer"></script>
 <script src="{{ URL::asset('pages/scripts/login.js') }}" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
+
+@if(session('loginFlashSuccess') or session('registerFlashSuccess') or session('loginFlashError'))
+<script>
+    jQuery(document).ready(function() {
+        $('.login-form').show();
+        $('.register-form').hide();
+    });
+</script>
+@endif
+
+@if(session('registerFlashError'))
+<script>
+    jQuery(document).ready(function() {
+        $('.login-form').hide();
+        $('.register-form').show();
+    });
+</script>
+@endif
 </body>
 
 </html>

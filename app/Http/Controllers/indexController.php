@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\accessListModel;
+use Auth;
 
 class indexController extends Controller
 {
     public function index(Request $request)
     {
-        $orm = new accessListModel();
-        $x = $orm->getTest();
+//        $x = Auth::user();
+//        dd($x->name);
+//        $accessListModel  = new accessListModel();
+//        $leftList = $accessListModel->get();
 
-        dd($x);
+        return view('layout/index');
     }
 }

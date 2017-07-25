@@ -18,6 +18,11 @@
     <link href="{{ URL::asset('layouts/layout/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('layouts/layout/css/themes/darkblue.min.css') }}" rel="stylesheet" type="text/css" id="style_color" />
     <link href="{{ URL::asset('layouts/layout/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    body {
+        font-family: Microsoft JhengHei;
+    }
+</style>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
 <div class="page-wrapper">
@@ -46,7 +51,7 @@
                                     <i class="icon-user"></i> My Profile </a>
                             </li>
                             <li>
-                                <a href="page_user_login_1.html">
+                                <a href="logout">
                                     <i class="icon-key"></i> Log Out </a>
                             </li>
                         </ul>
@@ -64,29 +69,29 @@
                             <span></span>
                         </div>
                     </li>
-
-                    @foreach ($leftList as $val)
-                    <li class="nav-item start ">
-                        <a href="javascript:;" class="nav-link ">
-                            <i class="icon-home"></i>
-                            <span class="title">{{ $val->name }}</span>
-                        </a>
-                    </li>
-                    @endforeach
+                    @foreach ($mainClass as $key => $val)
                     <li class="nav-item start ">
                         <a href="javascript:;" class="nav-link nav-toggle">
-                            <i class="icon-settings"></i>
-                            <span class="title">前台管理</span>
+
+                            <i class="{{ $val['icon'] }}"></i>
+                            <span class="title">{{ $val['name'] }}</span>
+                            @if(isset($subClass[$key]))
                             <span class="arrow"></span>
+                            @endif
                         </a>
-                        <ul class="sub-menu">
-                            <li class="nav-item  ">
-                                <a href="page_cookie_consent_1.html" class="nav-link ">
-                                    <span class="title">Banner</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @if(isset($subClass[$key]))
+                            <ul class="sub-menu">
+                            @foreach ($subClass[$key] as $val2)
+                                <li class="nav-item  ">
+                                    <a href="page_cookie_consent_1.html" class="nav-link ">
+                                        <span class="title">{{ $val2['name'] }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                            </ul>
+                        @endif
                     </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
