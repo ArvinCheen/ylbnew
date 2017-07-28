@@ -30,7 +30,8 @@
         <div class="page-header-inner ">
             <div class="page-logo">
                 <a href="index.html">
-                    <img src="{{ URL::asset('layouts/layout/img/admins_logo_new.png') }}" alt="logo" class="logo-default" style="margin:10px 10px;width:100px;"/> </a>
+                    <img src="{{ URL::asset('layouts/layout/img/admins_logo_new.png') }}" alt="logo" class="logo-default" style="margin:10px 10px;width:100px;"/>
+                </a>
                 <div class="menu-toggler sidebar-toggler">
                     <span></span>
                 </div>
@@ -71,7 +72,7 @@
                     </li>
                     @foreach ($mainClass as $key => $val)
                     <li class="nav-item start ">
-                        <a href="javascript:;" class="nav-link nav-toggle">
+                        <a href="{{ $val['url'] }}" class="nav-link nav-toggle">
 
                             <i class="{{ $val['icon'] }}"></i>
                             <span class="title">{{ $val['name'] }}</span>
@@ -83,7 +84,7 @@
                             <ul class="sub-menu">
                             @foreach ($subClass[$key] as $val2)
                                 <li class="nav-item  ">
-                                    <a href="page_cookie_consent_1.html" class="nav-link ">
+                                    <a href="{{ $val2['url'] }}" class="nav-link ">
                                         <span class="title">{{ $val2['name'] }}</span>
                                     </a>
                                 </li>
@@ -97,7 +98,7 @@
         </div>
         <div class="page-content-wrapper">
             <div class="page-content">
-                @content
+                @yield('content')
             </div>
         </div>
     </div>

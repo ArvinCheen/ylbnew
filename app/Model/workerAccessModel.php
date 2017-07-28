@@ -96,6 +96,10 @@ class workerAccessModel extends Model
     # 刪除員工權限
     function delete_worker_access_item_by_worker_sn($worker_sn)
     {
+        /**
+         * 改寫
+         */
         return $this->where('worker_sn', $worker_sn)->delete();
     }
+
 }

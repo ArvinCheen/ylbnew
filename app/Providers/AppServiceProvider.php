@@ -17,12 +17,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('*', function($view) {
-            $workerAccessModel = new workerAccessModel();
-            $employeeSn = Auth::user()->employee_sn;
-            $mainClass = $workerAccessModel->getLeftMenuMainClass($employeeSn);
-            $subclass = $workerAccessModel->getLeftMenuSubclass($employeeSn);
+            if (Auth::check()) {
+                $workerAccessModel = new workerAccessModel();
+                $employeeSn = Auth::user()->employee_sn;
+                $mainClass = $workerAccessModel->getLeftMenuMainClass($employeeSn);
+                $subclass = $workerAccessModel->getLeftMenuSubclass($employeeSn);
 
-            $view->with('mainClass', $mainClass)->with('subClass', $subclass);
+                $view->with('mainClass', $mainClass)->with('subClass', $subclass);
+            };
         });
     }
 

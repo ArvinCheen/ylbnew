@@ -13,6 +13,10 @@ class accessListModel extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'name', 'url', 'father_sn', 'order', 'show', 'create_time',
+        ];
+
     # 權限管理 取全部權限項目
     # get_access_item
     function getAllAccessItem()
